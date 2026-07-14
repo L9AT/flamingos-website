@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#1C1C1C" />
+  <meta name="description" content="Build your own Flamingo from the official trait collection." />
+  <title>Flamingo Builder</title>
+  <link rel="icon" type="image/png" href="LOGO/Untitled_Artwork22.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="builder.css?v=5" />
+  <link rel="stylesheet" href="shared.css?v=3" />
+</head>
+<body>
+  <header class="builder-header">
+    <a href="index.html" class="builder-brand" aria-label="Back to Flamingos">
+      <img src="LOGO/Untitled_Artwork22.png" alt="Flamingos" />
+    </a>
+    <a href="index.html" class="back-link">← BACK TO SITE</a>
+  </header>
+
+  <main class="builder-shell">
+    <section class="builder-intro">
+      <p>FLAMINGOS LAB / 01</p>
+      <h1>Flamingo Builder</h1>
+      <span>Mix the flock. Make it yours.</span>
+    </section>
+
+    <section class="builder-workspace">
+      <div class="preview-panel">
+        <div class="canvas-wrap" id="canvas-wrap">
+          <canvas id="builder-canvas" width="2000" height="2000" aria-label="Flamingo preview"></canvas>
+          <div class="canvas-loader" id="canvas-loader">BUILDING...</div>
+        </div>
+        <div class="preview-actions">
+          <button type="button" id="randomize-btn" class="primary-action">↗ RANDOMIZE</button>
+          <button type="button" id="reset-btn">RESET</button>
+          <button type="button" id="download-builder-btn">⇩ DOWNLOAD PNG</button>
+          <button type="button" id="share-builder-btn" class="share-action">𝕏 SHARE ON X</button>
+        </div>
+      </div>
+
+      <div class="traits-panel">
+        <div class="traits-heading">
+          <div>
+            <p>TRAIT STUDIO</p>
+            <h2>Choose your layers</h2>
+          </div>
+          <span id="trait-count">0 TRAITS</span>
+        </div>
+        <div class="category-tabs" id="category-tabs" role="tablist" aria-label="Trait categories"></div>
+        <div class="active-trait-bar">
+          <span id="active-category">BACKGROUND</span>
+          <strong id="active-trait-name">—</strong>
+        </div>
+        <div class="trait-grid" id="trait-grid" role="tabpanel"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <img src="LOGO/Untitled_Artwork22.png" alt="Flamingos" class="footer-logo" />
+        <span>flamingos</span>
+      </div>
+      <span class="footer-right">© 2026 · all rights reserved</span>
+    </div>
+  </footer>
+
+  <div class="share-modal" id="share-modal" aria-hidden="true">
+    <div class="share-backdrop"></div>
+    <section class="share-dialog" role="dialog" aria-modal="true" aria-labelledby="share-title">
+      <button type="button" class="share-close" data-close-share aria-label="Close">×</button>
+      <p>YOUR FLAMINGO IS READY</p>
+      <h2 id="share-title">Paste it into X.</h2>
+      <div class="share-preview"><img id="share-preview-image" alt="Your custom Flamingo" /></div>
+      <ol>
+        <li><strong id="share-image-status">Image copied.</strong> Keep this window open.</li>
+        <li>Click <strong>Open X Composer</strong> below.</li>
+        <li>Inside the post, press <kbd>Ctrl</kbd> + <kbd>V</kbd> or <kbd>⌘</kbd> + <kbd>V</kbd>.</li>
+        <li>Check the image, then publish your Flamingo.</li>
+      </ol>
+      <button type="button" id="open-x-btn" class="open-x-btn">OPEN X COMPOSER ↗</button>
+      <span class="share-note">The caption is already written for you.</span>
+    </section>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="builder.js?v=13"></script>
+</body>
+</html>

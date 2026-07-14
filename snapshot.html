@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Flamingos Snapshot — export NFT holder wallets from OpenSea, Ethereum, and Robinhood Chain collections." />
+  <meta name="theme-color" content="#1c1c1c" />
+  <title>Flamingos Snapshot</title>
+  <link rel="icon" type="image/png" href="LOGO/icon.png" />
+  <link rel="apple-touch-icon" href="LOGO/icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="snapshot.css?v=4" />
+  <link rel="stylesheet" href="shared.css?v=3" />
+</head>
+<body class="snapshot-intro-open">
+  <section class="snapshot-intro" id="snapshot-intro" role="dialog" aria-modal="true" aria-labelledby="snapshot-intro-title">
+    <div class="snapshot-intro-grid" aria-hidden="true"></div>
+    <div class="snapshot-intro-glow" aria-hidden="true"></div>
+    <div class="snapshot-intro-card">
+      <div class="snapshot-intro-mark" aria-hidden="true">
+        <span class="snapshot-orbit"></span>
+        <img src="LOGO/Untitled_Artwork22.png" alt="" />
+      </div>
+      <p class="snapshot-intro-kicker">FLAMINGOS TOOLS / 01</p>
+      <h1 id="snapshot-intro-title">Flamingos<br /><span>Snapshot</span></h1>
+      <p class="snapshot-intro-lead">Holder snapshots, simplified.</p>
+      <p class="snapshot-intro-copy">Paste a collection link or contract, filter the holders, and export a clean wallet list ready for your next drop.</p>
+      <div class="snapshot-intro-features" aria-label="Features">
+        <span>ETHEREUM</span>
+        <span>ROBINHOOD CHAIN</span>
+      </div>
+      <button class="snapshot-enter" id="snapshot-enter" type="button">
+        <span>ENTER SNAPSHOT</span><span aria-hidden="true">↗</span>
+      </button>
+      <p class="snapshot-intro-note">Built by Flamingos for projects and communities.</p>
+    </div>
+  </section>
+
+  <header class="siteHeader">
+    <a class="brand" href="index.html" aria-label="Back to Flamingos">
+      <img src="LOGO/Untitled_Artwork22.png" alt="Flamingos" />
+    </a>
+    <a class="backLink" href="index.html">← BACK TO SITE</a>
+  </header>
+
+  <main class="shell">
+    <section class="tool">
+      <div class="topbar">
+        <div>
+          <p class="eyebrow">FLAMINGOS TOOLS / 01</p>
+          <h1>Flamingos Snapshot</h1>
+        </div>
+        <div id="statePill" class="pill">Ready</div>
+      </div>
+
+      <form id="jobForm" class="form">
+        <label for="collectionUrl">Collection link / contract</label>
+        <div class="inputRow">
+          <input id="collectionUrl" name="collectionUrl" autocomplete="off" placeholder="OpenSea or contract address" />
+          <button id="startBtn" type="submit">START</button>
+        </div>
+      </form>
+
+      <section class="optionsGrid" aria-label="Snapshot options">
+        <label><span>Chain</span>
+          <select id="chainMode">
+            <option value="auto">Auto</option>
+            <option value="ethereum">Ethereum</option>
+            <option value="robinhood">Robinhood</option>
+          </select>
+        </label>
+        <label><span>Min holdings</span><input id="minHoldings" type="number" min="1" value="1" /></label>
+        <label><span>Airdrop amount</span><input id="airdropAmount" placeholder="Optional" /></label>
+        <label class="wide"><span>Exclude wallets</span><textarea id="excludeList" rows="3" placeholder="Paste team or treasury wallets to exclude"></textarea></label>
+      </section>
+
+      <form id="bulkForm" class="bulkForm">
+        <label for="bulkUrls">Bulk scan</label>
+        <textarea id="bulkUrls" name="bulkUrls" rows="6" placeholder="Paste multiple collection links or contracts — one per line"></textarea>
+        <div class="bulkActions">
+          <button id="bulkBtn" type="submit">SCAN ALL</button>
+          <span>Ctrl + Enter to scan</span>
+        </div>
+      </form>
+
+      <div class="statusBand">
+        <div><span class="muted">Status</span><strong id="stepText">Waiting</strong></div>
+        <div><span class="muted">Addresses</span><strong id="countText">-</strong></div>
+        <div><span class="muted">Contract</span><strong id="contractText" class="copyContract" role="button" tabindex="0" aria-label="Copy contract address" title="Click to copy contract">-</strong></div>
+      </div>
+
+      <div class="progressWrap" aria-hidden="true"><div id="progressBar"></div></div>
+      <div id="resultBox" class="result hidden"><a id="downloadLink" class="download" href="#">DOWNLOAD CSV</a></div>
+      <div id="manualBox" class="manual hidden">
+        <strong>Manual Etherscan download</strong>
+        <span>Open the export, complete verification, and download the CSV. Flamingos Snapshot will detect it.</span>
+        <a id="manualLink" href="#" target="_blank" rel="noreferrer">OPEN ETHERSCAN EXPORT</a>
+      </div>
+      <div class="logWrap hidden">
+        <div class="logHead"><span>Run log</span><button id="clearBtn" type="button" class="ghost">CLEAR</button></div>
+        <ol id="logList"></ol>
+      </div>
+    </section>
+
+    <aside class="history">
+      <p class="eyebrow">YOUR EXPORTS</p>
+      <h2>Recent snapshots</h2>
+      <div class="allExport">
+        <button id="allCsvBtn" type="button">ALL CSV</button>
+        <button id="allTxtBtn" type="button" class="secondary">ALL TXT</button>
+        <span id="allExportStatus"></span>
+      </div>
+      <div id="historyList" class="files"></div>
+    </aside>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-left"><img src="LOGO/Untitled_Artwork22.png" alt="Flamingos" class="footer-logo" /><span>flamingos</span></div>
+      <span class="footer-right">© 2026 · all rights reserved</span>
+    </div>
+  </footer>
+
+  <script src="snapshot.js?v=3"></script>
+</body>
+</html>

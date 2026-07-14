@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+
+# Environment secrets — NEVER commit
+.env
+.env.local
+.env.production
+
+# Tool outputs
+tools/holder-harvester/outputs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Vercel
+.vercel
+
+# Logs
+tools/holder-harvester/logs/
+
+# Build outputs
+dist/
+dist-ssr/
+*.local
+package.json
+package-lock.json

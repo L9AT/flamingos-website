@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NFT Holder Harvester</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <section class="tool">
+        <div class="topbar">
+          <div>
+            <p class="eyebrow">OpenSea / Blockscout -> CSV</p>
+            <h1>NFT Holder Harvester</h1>
+          </div>
+          <div id="statePill" class="pill">Ready</div>
+        </div>
+
+        <form id="jobForm" class="form">
+          <label for="collectionUrl">Collection link / contract</label>
+          <div class="inputRow">
+            <input
+              id="collectionUrl"
+              name="collectionUrl"
+              autocomplete="off"
+              placeholder="OpenSea link, Robinhood Blockscout token link, or contract"
+            />
+            <button id="startBtn" type="submit">Start</button>
+          </div>
+        </form>
+
+        <section class="optionsGrid">
+          <label>
+            <span>Chain</span>
+            <select id="chainMode">
+              <option value="auto">Auto</option>
+              <option value="ethereum">Ethereum</option>
+              <option value="robinhood">Robinhood</option>
+            </select>
+          </label>
+          <label>
+            <span>Min holdings</span>
+            <input id="minHoldings" type="number" min="1" value="1" />
+          </label>
+          <label>
+            <span>Airdrop amount</span>
+            <input id="airdropAmount" placeholder="optional" />
+          </label>
+          <label class="wide">
+            <span>Exclude wallets</span>
+            <textarea id="excludeList" rows="3" placeholder="Paste team/treasury wallets to remove"></textarea>
+          </label>
+        </section>
+
+        <form id="bulkForm" class="bulkForm">
+          <label for="bulkUrls">Bulk scan</label>
+          <textarea
+            id="bulkUrls"
+            name="bulkUrls"
+            rows="6"
+            placeholder="Paste many OpenSea links, Robinhood Blockscout token links, or contracts here"
+          ></textarea>
+          <div class="bulkActions">
+            <button id="bulkBtn" type="submit">Scan All</button>
+            <span>Enter = new line, Ctrl+Enter = scan</span>
+          </div>
+        </form>
+
+        <div class="statusBand">
+          <div>
+            <span class="muted">Status</span>
+            <strong id="stepText">Waiting</strong>
+          </div>
+          <div>
+            <span class="muted">Addresses</span>
+            <strong id="countText">-</strong>
+          </div>
+          <div>
+            <span class="muted">Contract</span>
+            <strong id="contractText">-</strong>
+          </div>
+        </div>
+
+        <div class="progressWrap">
+          <div id="progressBar"></div>
+        </div>
+
+        <div id="resultBox" class="result hidden">
+          <a id="downloadLink" class="download" href="#">Download CSV</a>
+        </div>
+
+        <div id="manualBox" class="manual hidden">
+          <strong>Manual Etherscan download</strong>
+          <span>Open this link in your normal Chrome/Edge, complete verification, click Download yourself. This app will detect the CSV from Downloads.</span>
+          <a id="manualLink" href="#" target="_blank" rel="noreferrer">Open Etherscan export</a>
+        </div>
+
+        <div class="logWrap hidden">
+          <div class="logHead">
+            <span>Run log</span>
+            <button id="clearBtn" type="button" class="ghost">Clear</button>
+          </div>
+          <ol id="logList"></ol>
+        </div>
+      </section>
+
+      <aside class="history">
+        <h2>Recent CSVs</h2>
+        <div class="allExport">
+          <button id="allCsvBtn" type="button">All CSV</button>
+          <button id="allTxtBtn" type="button" class="secondary">All TXT</button>
+          <span id="allExportStatus"></span>
+        </div>
+        <div id="historyList" class="files"></div>
+      </aside>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

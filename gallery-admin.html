@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex,nofollow" />
+  <title>Gallery Review — Flamingos</title>
+  <link rel="icon" type="image/png" href="LOGO/Untitled_Artwork22.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="gallery-admin.css?v=4" />
+  <link rel="stylesheet" href="shared.css?v=3" />
+</head>
+
+<body>
+  <header>
+    <a href="index.html" class="brand"><img src="LOGO/Untitled_Artwork22.png" alt="Flamingos" /></a>
+    <div>
+      <a href="community.html">VIEW GALLERY ↗</a>
+      <button id="lock-admin" hidden>LOCK</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="unlock-card" id="unlock-view">
+      <p class="eyebrow">OWNER ACCESS</p>
+      <h1>GALLERY REVIEW</h1>
+      <p>Sign in to review community fan art, approve submissions, and grant GTD spots.</p>
+      <form id="unlock-form">
+        <div class="key-row">
+          <div class="login-field">
+            <label for="admin-username">USERNAME</label>
+            <input id="admin-username" type="text" autocomplete="username" placeholder="admin" required />
+          </div>
+          <div class="login-field">
+            <label for="admin-password">PASSWORD</label>
+            <input id="admin-password" type="password" autocomplete="current-password" placeholder="Enter password" required />
+          </div>
+          <button type="submit">LOGIN ↗</button>
+        </div>
+        <p id="unlock-error" role="alert"></p>
+      </form>
+    </section>
+
+    <section id="review-view" hidden>
+      <div class="review-heading">
+        <div>
+          <p class="eyebrow">COMMUNITY MODERATION</p>
+          <h1>REVIEW QUEUE</h1>
+        </div>
+        <button id="refresh-queue">↻ REFRESH</button>
+      </div>
+
+      <div class="stats">
+        <article><span>PENDING</span><strong id="pending-stat">—</strong></article>
+        <article><span>APPROVED</span><strong id="approved-stat">—</strong></article>
+        <article><span>REJECTED</span><strong id="rejected-stat">—</strong></article>
+        <article><span>GTD GIVEN</span><strong id="gtd-stat">—</strong></article>
+      </div>
+
+      <div class="queue-tabs" role="tablist" aria-label="Submission status">
+        <button class="active" type="button" data-queue-status="pending">PENDING</button>
+        <button type="button" data-queue-status="approved">APPROVED</button>
+        <button type="button" data-queue-status="rejected">REJECTED</button>
+      </div>
+
+      <p class="queue-status" id="queue-status" role="status"></p>
+      <div class="review-grid" id="review-grid"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <img src="LOGO/Untitled_Artwork22.png" alt="Flamingos" class="footer-logo" />
+        <span>flamingos</span>
+      </div>
+      <span class="footer-right">© 2026 · all rights reserved</span>
+    </div>
+  </footer>
+
+  <template id="submission-template">
+    <article class="submission-card">
+      <div class="submission-image"><img alt="Submitted fan art" /></div>
+      <div class="submission-info">
+        <div class="submission-top"><span class="status-pill">PENDING</span><time></time></div>
+        <h2></h2>
+        <a class="artist-link" target="_blank" rel="noopener noreferrer"></a>
+        <span class="vote-total">0 COMMUNITY VOTES</span>
+        <button class="wallet-copy" type="button"></button>
+        <label class="gtd-choice"><input type="checkbox" checked /><span>GRANT GTD SPOT IF APPROVED</span></label>
+        <div class="decision-row">
+          <button class="reject-btn" type="button">REJECT</button>
+          <button class="approve-btn" type="button">APPROVE + PUBLISH</button>
+          <button class="delete-btn" type="button" hidden>DELETE ARTWORK</button>
+        </div>
+      </div>
+    </article>
+  </template>
+
+  <script src="config.js?v=6"></script>
+  <script src="gallery-admin.js?v=4"></script>
+</body>
+
+</html>

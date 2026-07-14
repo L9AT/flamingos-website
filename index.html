@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Flamingos — 5555 flamingos on Robinhood chain." />
+  <title>Flamingos</title>
+  <link rel="icon" type="image/png" href="LOGO/Untitled_Artwork22.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800;900&family=Space+Mono:wght@400;700&display=swap"
+    rel="stylesheet" />
+  <link rel="icon" type="image/png" href="LOGO/icon.png" />
+  <link rel="apple-touch-icon" href="LOGO/icon.png" />
+  <link rel="stylesheet" href="style.css?v=29" />
+  <link rel="stylesheet" href="shared.css?v=3" />
+</head>
+
+<body>
+
+  <!-- ═══ HEADER ═══ -->
+  <header id="site-header">
+    <div class="header-pill">
+      <div class="header-left">
+        <img src="LOGO/Untitled_Artwork22.png" alt="Flamingos" class="header-logo" />
+      </div>
+
+      <!-- Nav links shown inside pill when open -->
+      <nav class="header-nav" id="header-nav">
+        <div class="nav-col">
+          <a href="https://x.com/Flamingos_ETH?s=20" target="_blank" rel="noopener noreferrer">twitter / x</a>
+          <a href="builder.html">Flamingos Builder</a>
+          <a href="community.html" class="temporarily-hidden" hidden>Gallery</a>
+          <a href="snapshot.html">Snapshot</a>
+          <a href="gallery.html" class="temporarily-hidden" hidden>Submit Fan Art</a>
+        </div>
+      </nav>
+
+      <button class="menu-btn" id="menu-btn" aria-label="Toggle menu">
+        <span class="menu-icon" id="menu-icon">&#9776;</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ═══ HERO ═══ -->
+  <section class="hero" id="hero">
+    <h1 class="hero-title">Flamin&shy;gos</h1>
+    <p class="hero-sub">5555 flamingos on <a href="https://x.com/RobinhoodApp" target="_blank" rel="noopener noreferrer"
+        aria-label="Robinhood on X"><img src="LOGO/robinhood.png" alt="Robinhood" class="hero-chain-logo" /></a> chain.
+    </p>
+    <button class="hero-btn" id="wl-btn" aria-haspopup="dialog">GET WL</button>
+    <a href="gallery.html" class="hero-gtd-card temporarily-hidden" aria-label="Submit your funniest Flamingos art to win a GTD spot" hidden>
+      <span class="hero-gtd-star">★</span>
+      <span class="hero-gtd-copy">
+        <strong>FUNNIEST ART WINS GTD</strong>
+        <small>Create for Flamingos. Chance to get a GTD spot.</small>
+      </span>
+      <span class="hero-gtd-arrow">↗</span>
+    </a>
+    <button class="scroll-hint" id="scroll-to-flock" type="button" aria-label="Scroll to Meet the flock">
+      <span>SCROLL</span>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="6 9 12 15 18 9" />
+      </svg>
+    </button>
+  </section>
+
+  <!-- ═══ VIEWER ═══ -->
+  <section class="viewer" id="viewer">
+    <h2 class="viewer-title">Meet the flock.<br />Flying on <a href="https://x.com/RobinhoodApp" target="_blank"
+        rel="noopener noreferrer" aria-label="Robinhood on X"><img src="LOGO/robinhood.png" alt="Robinhood"
+          class="viewer-chain-logo" /></a> Chain.</h2>
+    <p class="viewer-supply">TOTAL SUPPLY <strong>5555</strong></p>
+
+    <div class="viewer-card">
+      <img src="nft/8.png" alt="Flamingo NFT 1" id="viewer-img" />
+    </div>
+
+    <div class="viewer-controls">
+      <button class="ctrl" id="prev-btn" aria-label="Previous">&#8249;</button>
+      <button class="ctrl ctrl-text" id="random-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <polyline points="16 3 21 3 21 8" />
+          <line x1="4" y1="20" x2="21" y2="3" />
+          <polyline points="21 16 21 21 16 21" />
+          <line x1="4" y1="4" x2="9" y2="9" />
+        </svg>
+        random
+      </button>
+      <button class="ctrl ctrl-text" id="download-btn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+          <polyline points="7 10 12 15 17 10" />
+          <line x1="12" y1="15" x2="12" y2="3" />
+        </svg>
+        download
+      </button>
+      <button class="ctrl" id="next-btn" aria-label="Next">&#8250;</button>
+    </div>
+
+    <div class="viewer-dots" id="viewer-dots"></div>
+
+    <a href="builder.html" class="trait-builder-card">
+      <span>FLAMINGOS LAB</span>
+      <strong>Trait Builder</strong>
+      <span class="trait-builder-arrow">↗</span>
+    </a>
+  </section>
+
+  <!-- ═══ FOOTER ═══ -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <img src="LOGO/Untitled_Artwork22.png" alt="Flamingos" class="footer-logo" />
+        <span>flamingos</span>
+      </div>
+      <span class="footer-right">© 2026 · all rights reserved</span>
+    </div>
+  </footer>
+
+
+  <!-- ═══ WHITELIST MODAL ═══ -->
+  <div id="wl-modal" class="wl-overlay" role="dialog" aria-modal="true" aria-labelledby="wl-modal-title" hidden>
+    <div class="wl-card" id="wl-card">
+
+      <!-- Close button -->
+      <button class="wl-close" id="wl-close" aria-label="Close whitelist modal">&times;</button>
+
+      <!-- ── Form view ───────────────────────────── -->
+      <div id="wl-form-view">
+        <h2 class="wl-title" id="wl-modal-title">GET WHITELISTED</h2>
+        <p class="wl-subtitle">Complete all steps to secure your spot.</p>
+
+        <!-- Step 1: Follow on X -->
+        <div class="wl-task" id="task-follow">
+          <div class="wl-task-left">
+            <span class="wl-task-num">01</span>
+            <span class="wl-task-label">Follow us on X</span>
+          </div>
+          <button class="wl-task-btn" id="btn-follow" data-task="follow">Follow ↗</button>
+        </div>
+
+        <!-- Step 2: Like the post -->
+        <div class="wl-task" id="task-like">
+          <div class="wl-task-left">
+            <span class="wl-task-num">02</span>
+            <span class="wl-task-label">Like the post</span>
+          </div>
+          <button class="wl-task-btn" id="btn-like" data-task="like">Like ↗</button>
+        </div>
+
+        <!-- Step 3: Repost -->
+        <div class="wl-task" id="task-repost">
+          <div class="wl-task-left">
+            <span class="wl-task-num">03</span>
+            <span class="wl-task-label">Repost the post</span>
+          </div>
+          <button class="wl-task-btn" id="btn-repost" data-task="repost">Repost ↗</button>
+        </div>
+
+        <!-- Step 4: Wallet address -->
+        <div class="wl-wallet-section">
+          <label class="wl-label" for="wl-wallet">Your wallet address</label>
+          <input class="wl-input" id="wl-wallet" type="text" placeholder="Enter your EVM wallet (0x...)"
+            autocomplete="off" spellcheck="false" />
+          <p class="wl-error" id="wl-wallet-error" role="alert" hidden></p>
+        </div>
+
+        <!-- Honeypot (hidden from real users) -->
+        <div style="position:absolute;left:-9999px;top:-9999px;" aria-hidden="true">
+          <input type="text" name="wl_confirm" id="wl-honeypot" tabindex="-1" autocomplete="off" />
+        </div>
+
+        <!-- Error banner -->
+        <p class="wl-error wl-error-banner" id="wl-form-error" role="alert" hidden></p>
+
+        <!-- Submit -->
+        <button class="wl-submit" id="wl-submit" disabled>SUBMIT FOR WL</button>
+
+      </div>
+
+      <!-- ── Success view ───────────────────────── -->
+      <div id="wl-success-view" hidden>
+        <div class="wl-success-icon" aria-hidden="true">✓</div>
+        <h2 class="wl-title" id="wl-success-title">You're on the list!</h2>
+        <p class="wl-subtitle">Your wallet was submitted successfully.</p>
+        <button class="wl-submit" id="wl-done-btn">DONE</button>
+      </div>
+
+    </div><!-- /.wl-card -->
+  </div><!-- /#wl-modal -->
+
+  <script src="config.js?v=5"></script>
+  <script src="script.js?v=12"></script>
+</body>
+
+</html>

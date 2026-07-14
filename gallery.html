@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Create the funniest Flamingos fan art. The flock's funniest creation wins a GTD spot." />
+  <title>Community Gallery — Flamingos</title>
+  <link rel="icon" type="image/png" href="LOGO/Untitled_Artwork22.png" />
+  <link rel="apple-touch-icon" href="LOGO/icon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@800;900&family=Space+Mono:wght@400;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="gallery.css?v=19" />
+  <link rel="stylesheet" href="shared.css?v=3" />
+</head>
+
+<body>
+  <header class="gallery-header">
+    <a href="index.html" class="gallery-brand" aria-label="Flamingos home">
+      <img src="LOGO/Untitled_Artwork22.png" alt="" />
+    </a>
+    <div class="gallery-header-nav">
+      <a href="community.html" class="back-link">COMMUNITY GALLERY ↗</a>
+      <a href="index.html" class="back-link">← BACK TO SITE</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="gallery-intro">
+      <p class="eyebrow">FLAMINGOS COMMUNITY</p>
+      <h1>Make Your Flamingos</h1>
+      <span>Create it. Submit it. Join the gallery.</span>
+    </section>
+
+    <aside class="gtd-strip">
+      <div class="gtd-strip-title"><span>★</span><strong>THE FUNNIEST ART WINS</strong></div>
+      <p>Make the flock laugh. The funniest Flamingos artwork wins a GTD spot.</p>
+    </aside>
+
+    <section class="creation-grid" id="submit-art">
+      <article class="base-card panel">
+        <div class="panel-kicker">FLAMINGOS BASES</div>
+        <h2>Choose your Flamingo</h2>
+        <div class="base-preview">
+          <img id="base-preview-image" src="BASE/Pink.png" alt="Pink Flamingo base" />
+        </div>
+        <p>Download a Flamingos blank, give it your vision, and create something new for the flock.</p>
+        <div class="base-options" id="base-options" aria-label="Choose a Flamingo base">
+          <button class="base-option" type="button" data-src="BASE/Blue.png" data-name="Blue"
+            aria-label="Choose Blue base">
+            <img src="BASE/Blue.png" alt="" /><span>Blue</span>
+          </button>
+          <button class="base-option" type="button" data-src="BASE/Cream.png" data-name="Cream"
+            aria-label="Choose Cream base">
+            <img src="BASE/Cream.png" alt="" /><span>Cream</span>
+          </button>
+          <button class="base-option" type="button" data-src="BASE/Gray.png" data-name="Gray"
+            aria-label="Choose Gray base">
+            <img src="BASE/Gray.png" alt="" /><span>Gray</span>
+          </button>
+          <button class="base-option" type="button" data-src="BASE/Mauve.png" data-name="Mauve"
+            aria-label="Choose Mauve base">
+            <img src="BASE/Mauve.png" alt="" /><span>Mauve</span>
+          </button>
+          <button class="base-option active" type="button" data-src="BASE/Pink.png" data-name="Pink"
+            aria-label="Choose Pink base" aria-pressed="true">
+            <img src="BASE/Pink.png" alt="" /><span>Pink</span>
+          </button>
+          <button class="base-option" type="button" data-src="BASE/Yellow.png" data-name="Yellow"
+            aria-label="Choose Yellow base">
+            <img src="BASE/Yellow.png" alt="" /><span>Yellow</span>
+          </button>
+        </div>
+        <a class="action-btn lime" id="base-download" href="BASE/Pink.png" download="flamingos-base-pink.png">↓ DOWNLOAD
+          PINK BASE</a>
+      </article>
+
+      <article class="submit-card panel">
+        <div class="panel-kicker">YOUR CREATION</div>
+        <h2>Submit your fan art</h2>
+        <form id="gallery-form" novalidate>
+          <div class="field full">
+            <label for="art-file">ARTWORK <span>PNG, JPG or WEBP · MAX 8MB</span></label>
+            <label class="file-drop" id="file-drop" for="art-file">
+              <input id="art-file" name="artwork" type="file" accept="image/png,image/jpeg,image/webp" required />
+              <span class="file-plus">+</span>
+              <strong id="file-title">CHOOSE YOUR ART</strong>
+              <small id="file-meta">or drop it here</small>
+              <img id="file-preview" alt="Selected artwork preview" hidden />
+            </label>
+          </div>
+
+          <div class="field full">
+            <label for="art-title">ARTWORK TITLE</label>
+            <input id="art-title" name="title" type="text" maxlength="70" placeholder="Name your creation" required />
+          </div>
+
+          <div class="field full">
+            <label for="creator-x">X / TWITTER LINK</label>
+            <input id="creator-x" name="x_url" type="url" maxlength="180" placeholder="https://x.com/yourname"
+              required />
+          </div>
+
+          <div class="field full">
+            <label for="creator-wallet">EVM WALLET</label>
+            <input id="creator-wallet" name="wallet_address" type="text" maxlength="42" placeholder="0x..."
+              autocomplete="off" spellcheck="false" required />
+          </div>
+
+          <div class="bot-field" aria-hidden="true">
+            <label for="gallery-confirm">Leave empty</label>
+            <input id="gallery-confirm" name="gallery_confirm" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <label class="agree-row">
+            <input id="art-rights" type="checkbox" required />
+            <span>I made this artwork and accept full responsibility if someone dies laughing.</span>
+          </label>
+
+          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+          <button class="action-btn lime submit-btn" id="submit-art-btn" type="submit">SUBMIT FOR REVIEW ↗</button>
+        </form>
+
+        <div class="submit-success" id="submit-success" hidden>
+          <span>✓</span>
+          <h2>ART RECEIVED.</h2>
+          <p>Your work is waiting for review. The flock's funniest creation will appear with the GTD badge.</p>
+          <button class="action-btn" id="submit-another" type="button">SUBMIT ANOTHER</button>
+        </div>
+      </article>
+
+      <section class="how-it-works" aria-labelledby="how-title">
+        <p class="eyebrow">JOIN THE FLOCK</p>
+        <h2 id="how-title">Create for Flamingos</h2>
+        <p class="how-subtitle">Choose your Flamingo and create the funniest artwork you can.</p>
+        <div class="how-steps">
+          <article><span>1</span><strong>Pick a Flamingo</strong>
+            <p>Choose one of the blank Flamingos below.</p>
+          </article>
+          <article><span>2</span><strong>Make It Funny</strong>
+            <p>Add your funniest idea and make the flock laugh.</p>
+          </article>
+          <article><span>3</span><strong>Win the GTD</strong>
+            <p>Submit it. The funniest Flamingos artwork wins the GTD spot.</p>
+          </article>
+        </div>
+      </section>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <img src="LOGO/Untitled_Artwork22.png" alt="Flamingos" class="footer-logo" />
+        <span>flamingos</span>
+      </div>
+      <span class="footer-right">© 2026 · all rights reserved</span>
+    </div>
+  </footer>
+
+  <div class="submission-share" id="submission-share" hidden>
+    <div class="submission-share-backdrop" data-close-submission-share></div>
+    <section class="submission-share-dialog" role="dialog" aria-modal="true" aria-labelledby="submission-share-title">
+      <button class="submission-share-close" type="button" data-close-submission-share aria-label="Close">×</button>
+      <div class="submission-share-content">
+        <img id="submission-share-preview" alt="Your submitted Flamingos fan art" />
+      </div>
+      <div class="submission-share-message">
+        <p class="panel-kicker">SUBMISSION RECEIVED</p>
+        <h2 id="submission-share-title">Thank you, artist!</h2>
+        <p>Your artwork was submitted and is waiting for review. Share it with the flock while you wait!</p>
+      </div>
+      <p class="submission-share-status" id="submission-share-status" role="status">Your image will be copied for X.</p>
+      <button class="submission-x-button" id="share-submission-x" type="button">𝕏&nbsp; SHARE ON X</button>
+      <button class="share-later" type="button" data-close-submission-share>CLOSE</button>
+    </section>
+  </div>
+
+  <script src="config.js?v=6"></script>
+  <script src="gallery.js?v=10"></script>
+</body>
+
+</html>
