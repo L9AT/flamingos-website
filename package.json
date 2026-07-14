@@ -1,0 +1,13 @@
+{
+  "name": "flamingos-website",
+  "version": "1.0.0",
+  "description": "Flamingos Website",
+  "scripts": {
+    "dev": "vite",
+    "build": "node scripts/build-static.js",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "vite": "^5.2.0"
+  }
+}
