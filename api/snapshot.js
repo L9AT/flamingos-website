@@ -34,6 +34,7 @@ module.exports = async function handler(req, res) {
 
       collections.push({
         input,
+        name: resolved.name,
         contract: resolved.contract,
         source: resolved.source,
         count: holders.length,
@@ -45,7 +46,10 @@ module.exports = async function handler(req, res) {
       .map(([address, balance]) => ({ address, balance }))
       .sort((a, b) => b.balance - a.balance || a.address.localeCompare(b.address));
     const stamp = new Date().toISOString().replace(/[-:T]/g, "").slice(0, 14);
-    const fileName = `${collections.length > 1 ? "bulk" : "snapshot"}_wallet_addresses_${stamp}.csv`;
+    const projectName = collections.length === 1
+      ? safeFileName(collections[0].name)
+      : `bulk_${collections.length}_projects`;
+    const fileName = `${projectName}_wallet_addresses_${stamp}.csv`;
 
     res.setHeader("Cache-Control", "no-store");
     return res.status(200).json({
@@ -85,7 +89,11 @@ function getOptions(body) {
 
 async function resolveCollection(input, chainMode) {
   const direct = String(input).match(/0x[a-fA-F0-9]{40}/)?.[0]?.toLowerCase();
-  if (direct) return { contract: direct, source: chainMode === "auto" ? detectSource(input) : chainMode };
+  if (direct) {
+    const source = chainMode === "auto" ? detectSource(input) : chainMode;
+    const name = await resolveContractName(direct, source);
+    return { contract: direct, source, name };
+  }
 
   let url;
   try {
@@ -113,7 +121,33 @@ async function resolveCollection(input, chainMode) {
   if (!contract) throw new Error("OpenSea did not return a collection contract. Try the contract address.");
 
   const detected = String(contract.chain || "").toLowerCase() === "robinhood" ? "robinhood" : "ethereum";
-  return { contract: contract.address.toLowerCase(), source: chainMode === "auto" ? detected : chainMode };
+  return {
+    contract: contract.address.toLowerCase(),
+    source: chainMode === "auto" ? detected : chainMode,
+    name: String(data.name || slug).trim(),
+  };
+}
+
+async function resolveContractName(contract, source) {
+  const base = source === "robinhood" ? "https://robinhoodchain.blockscout.com" : "https://eth.blockscout.com";
+  try {
+    const response = await fetchWithTimeout(new URL(`/api/v2/tokens/${contract}`, base), { headers: jsonHeaders() });
+    if (response.ok) {
+      const token = await response.json();
+      const name = String(token.name || token.symbol || "").trim();
+      if (name) return name;
+    }
+  } catch {}
+  return `collection_${contract.slice(2, 8)}`;
+}
+
+function safeFileName(value) {
+  return String(value || "project")
+    .normalize("NFKD")
+    .replace(/[^a-zA-Z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .slice(0, 60)
+    .toLowerCase() || "project";
 }
 
 function detectSource(input) {
