@@ -6,7 +6,7 @@
 
 window.WL_CONFIG = Object.freeze({
   /* Set this to the final public domain, e.g. https://flamingos.xyz */
-  SITE_URL: 'https://flamingoseth.xyz',
+  SITE_URL: 'https://www.flamingoseth.xyz',
   /* ── Social links ────────────────────────────────────── */
   X_PROFILE_URL: 'https://x.com/intent/follow?screen_name=Flamingos_ETH',
   X_POST_URL: 'https://x.com/YOUR_HANDLE/status/YOUR_POST_ID',
