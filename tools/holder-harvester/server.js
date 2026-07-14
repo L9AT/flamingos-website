@@ -250,7 +250,10 @@ async function fetchOwnersForInput(job, input, contract, resolvedSource) {
   try {
     return await fetchOwnersFromApi(job, contract);
   } catch (err) {
-    if (source === "ethereum") throw err;
+    if (source === "ethereum") {
+      note(job, `Primary owner API failed, trying Ethereum Blockscout: ${err.message}`);
+      return fetchOwnersFromBlockscoutBase(job, contract, "https://eth.blockscout.com", "Ethereum");
+    }
     note(job, `Ethereum API did not work, trying Robinhood Blockscout`);
     return fetchOwnersFromBlockscout(job, contract);
   }
@@ -338,6 +341,42 @@ async function fetchOwnersFromBlockscout(job, contract) {
 
   if (!addresses.length) throw new Error("Robinhood Blockscout returned 0 owners.");
   note(job, `Fetched ${addresses.length} Robinhood holders automatically`);
+  return addresses;
+}
+
+async function fetchOwnersFromBlockscoutBase(job, contract, base, label) {
+  const owners = new Map();
+  let url = new URL(`/api/v2/tokens/${contract}/holders`, base);
+  let page = 1;
+
+  while (url) {
+    note(job, `${label} holders page ${page}`);
+    const json = await fetchJsonWithRetry(url, 6);
+    const batch = Array.isArray(json.items) ? json.items : [];
+
+    for (const item of batch) {
+      const address = String(item.address?.hash || item.address || "").toLowerCase();
+      if (/^0x[a-f0-9]{40}$/.test(address)) {
+        owners.set(address, Number(item.value || 0));
+      }
+    }
+
+    if (!json.next_page_params || !batch.length) break;
+    url = new URL(`/api/v2/tokens/${contract}/holders`, base);
+    for (const [key, value] of Object.entries(json.next_page_params)) {
+      if (value !== null && value !== undefined) url.searchParams.set(key, String(value));
+    }
+    page += 1;
+    if (page > 3000) throw new Error(`Too many ${label} Blockscout pages.`);
+    await delay(120);
+  }
+
+  const addresses = [...owners.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .map(([address, balance]) => ({ address, balance }));
+
+  if (!addresses.length) throw new Error(`${label} Blockscout returned 0 owners.`);
+  note(job, `Fetched ${addresses.length} ${label} holders automatically`);
   return addresses;
 }
 

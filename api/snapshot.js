@@ -127,15 +127,18 @@ async function fetchOwners(contract, source, logs) {
   try {
     return await fetchEthereumOwners(contract, logs);
   } catch (error) {
-    if (source !== "auto") throw error;
-    logs.push("Ethereum source unavailable; trying Robinhood Chain");
-    return fetchRobinhoodOwners(contract, logs);
+    logs.push(`Primary owner API unavailable (${error.message}); trying Ethereum Blockscout`);
+    return fetchBlockscoutOwners(contract, "https://eth.blockscout.com", "Ethereum", logs);
   }
 }
 
 async function fetchRobinhoodOwners(contract, logs) {
-  logs.push("Downloading Robinhood holder snapshot");
-  const csvUrl = new URL(`https://robinhoodchain.blockscout.com/api/v2/tokens/${contract}/holders/csv`);
+  return fetchBlockscoutOwners(contract, "https://robinhoodchain.blockscout.com", "Robinhood Chain", logs);
+}
+
+async function fetchBlockscoutOwners(contract, base, label, logs) {
+  logs.push(`Downloading ${label} holder snapshot`);
+  const csvUrl = new URL(`/api/v2/tokens/${contract}/holders/csv`, base);
   csvUrl.searchParams.set("from_period", "null");
   csvUrl.searchParams.set("to_period", "null");
 
@@ -155,12 +158,12 @@ async function fetchRobinhoodOwners(contract, logs) {
   }
 
   const owners = new Map();
-  let url = new URL(`/api/v2/tokens/${contract}/holders`, "https://robinhoodchain.blockscout.com");
+  let url = new URL(`/api/v2/tokens/${contract}/holders`, base);
   let page = 1;
   while (url && owners.size < MAX_HOLDERS) {
     logs.push(`Reading holder page ${page}`);
     const response = await fetchWithTimeout(url, { headers: jsonHeaders() }, 20000);
-    if (!response.ok) throw new Error(`Robinhood Chain returned HTTP ${response.status}.`);
+    if (!response.ok) throw new Error(`${label} returned HTTP ${response.status}.`);
     const data = await response.json();
     const items = Array.isArray(data.items) ? data.items : [];
     for (const item of items) {
@@ -168,7 +171,7 @@ async function fetchRobinhoodOwners(contract, logs) {
       if (/^0x[a-f0-9]{40}$/.test(address)) owners.set(address, Number(item.value || 1) || 1);
     }
     if (!items.length || !data.next_page_params) break;
-    url = new URL(`/api/v2/tokens/${contract}/holders`, "https://robinhoodchain.blockscout.com");
+    url = new URL(`/api/v2/tokens/${contract}/holders`, base);
     for (const [key, value] of Object.entries(data.next_page_params)) {
       if (value !== null && value !== undefined) url.searchParams.set(key, String(value));
     }
@@ -176,7 +179,7 @@ async function fetchRobinhoodOwners(contract, logs) {
     if (page > 500) throw new Error("This collection is too large for the online scanner.");
   }
   const holders = [...owners.entries()].map(([address, balance]) => ({ address, balance }));
-  if (!holders.length) throw new Error("Robinhood Chain returned no holders.");
+  if (!holders.length) throw new Error(`${label} returned no holders.`);
   return holders;
 }
 
