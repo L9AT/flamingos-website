@@ -492,7 +492,6 @@ function getOptions(body = {}) {
   return {
     minHoldings,
     chainMode,
-    airdropAmount: String(body.airdropAmount || "").trim(),
     excludeList: parseAddressList(String(body.excludeList || "")),
   };
 }
@@ -527,10 +526,7 @@ function applyHolderOptions(items, options = {}) {
     .sort((a, b) => b.balance - a.balance || a.address.localeCompare(b.address));
 }
 
-function holderCsvBody(holders, options = {}) {
-  if (options.airdropAmount) {
-    return ["wallet_address,amount", ...holders.map((holder) => `${csvLine(holder.address)},${csvLine(options.airdropAmount)}`)].join("\n") + "\n";
-  }
+function holderCsvBody(holders) {
   return ["wallet_address", ...holders.map((holder) => csvLine(holder.address))].join("\n") + "\n";
 }
 

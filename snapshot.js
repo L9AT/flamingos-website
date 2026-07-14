@@ -4,7 +4,6 @@ const input = document.querySelector("#collectionUrl");
 const bulkUrls = document.querySelector("#bulkUrls");
 const chainMode = document.querySelector("#chainMode");
 const minHoldings = document.querySelector("#minHoldings");
-const airdropAmount = document.querySelector("#airdropAmount");
 const excludeList = document.querySelector("#excludeList");
 const startBtn = document.querySelector("#startBtn");
 const bulkBtn = document.querySelector("#bulkBtn");
@@ -252,7 +251,6 @@ function collectOptions() {
   return {
     chainMode: chainMode.value,
     minHoldings: minHoldings.value,
-    airdropAmount: airdropAmount.value.trim(),
     excludeList: excludeList.value.trim(),
   };
 }
