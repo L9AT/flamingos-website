@@ -185,7 +185,11 @@
   let isSubmitting = false;
   let openedAt = 0;
   let submitted = false;
+  let whitelistClosed = false;
   let dbLinks = { like: null, repost: null };
+
+  // One shared deadline for every visitor: 15 July 2026, 16:27:25 Casablanca time.
+  const WL_CLOSES_AT = Date.parse('2026-07-15T15:27:25Z');
 
   // ── DOM refs ─────────────────────────────────────────────
   const wlBtn = document.getElementById('wl-btn');
@@ -203,6 +207,9 @@
   const submitBtn = document.getElementById('wl-submit');
   const doneBtn = document.getElementById('wl-done-btn');
   const honeypot = document.getElementById('wl-honeypot');
+  const countdown = document.getElementById('wl-countdown');
+  const countdownLabel = document.getElementById('wl-countdown-label');
+  const countdownTime = document.getElementById('wl-countdown-time');
 
   if (!window.WL_CONFIG) {
     console.error('[WLModal] WL_CONFIG not found. Make sure config.js is loaded before script.js.');
@@ -210,8 +217,38 @@
   }
   const CFG = window.WL_CONFIG;
 
+  function closeWhitelist() {
+    if (whitelistClosed) return;
+    whitelistClosed = true;
+    wlBtn.disabled = true;
+    wlBtn.classList.add('is-closed');
+    wlBtn.textContent = 'WL CLOSED';
+    wlBtn.removeAttribute('aria-haspopup');
+    countdown.classList.add('is-closed');
+    countdownLabel.textContent = 'WHITELIST CLOSED';
+    countdownTime.textContent = '00:00:00';
+    submitBtn.disabled = true;
+    if (!modal.hasAttribute('hidden')) closeModal(false);
+  }
+
+  function updateCountdown() {
+    const remaining = Math.max(0, WL_CLOSES_AT - Date.now());
+    if (remaining <= 0) {
+      closeWhitelist();
+      return;
+    }
+
+    const totalSeconds = Math.floor(remaining / 1000);
+    const hours = Math.floor(totalSeconds / 3600);
+    const minutes = Math.floor((totalSeconds % 3600) / 60);
+    const seconds = totalSeconds % 60;
+    countdownTime.textContent = [hours, minutes, seconds]
+      .map(value => String(value).padStart(2, '0'))
+      .join(':');
+  }
+
   function openModal() {
-    if (submitted) return;
+    if (submitted || whitelistClosed) return;
     modal.removeAttribute('hidden');
     document.body.style.overflow = 'hidden';
     openedAt = Date.now();
@@ -219,10 +256,10 @@
     trapFocus();
   }
 
-  function closeModal() {
+  function closeModal(returnFocus = true) {
     modal.setAttribute('hidden', '');
     document.body.style.overflow = '';
-    wlBtn.focus();
+    if (returnFocus) wlBtn.focus();
   }
 
   function trapFocus() {
@@ -274,7 +311,7 @@
   function updateSubmitState() {
     const allTasks = tasksDone.follow && tasksDone.like && tasksDone.repost;
     const wallet = validateWallet();
-    submitBtn.disabled = !(allTasks && wallet.ok && !isSubmitting);
+    submitBtn.disabled = !(allTasks && wallet.ok && !isSubmitting && !whitelistClosed);
   }
 
   function showWalletError(msg) {
@@ -298,7 +335,10 @@
   }
 
   async function handleSubmit() {
-    if (isSubmitting) return;
+    if (isSubmitting || whitelistClosed || Date.now() >= WL_CLOSES_AT) {
+      closeWhitelist();
+      return;
+    }
     clearFormError();
     clearWalletError();
     const walletRes = validateWallet();
@@ -399,5 +439,10 @@
   }
 
   fetchDbLinks();
+  updateCountdown();
+  const countdownTimer = window.setInterval(() => {
+    updateCountdown();
+    if (whitelistClosed) window.clearInterval(countdownTimer);
+  }, 1000);
 
 })();

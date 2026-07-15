@@ -17,7 +17,9 @@ window.WL_CONFIG = Object.freeze({
   SUPABASE_ANON_KEY: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRheGJxaW5ianJicnl0YXh4anppIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzY3OTM4NTYsImV4cCI6MjA5MjM2OTg1Nn0.sZ8mbg1LUs2mJepn9DqHqBenM12TjsLlAdbeicMVP_A',
 
   /* ── Edge Function endpoint ──────────────────────────── */
-  EDGE_FUNCTION_URL: 'https://taxbqinbjrbrytaxxjzi.supabase.co/functions/v1/submit-whitelist',
+  EDGE_FUNCTION_URL: ['localhost', '127.0.0.1'].includes(window.location.hostname)
+    ? 'https://taxbqinbjrbrytaxxjzi.supabase.co/functions/v1/submit-whitelist'
+    : '/api/submit-whitelist',
   GALLERY_FUNCTION_URL: 'https://taxbqinbjrbrytaxxjzi.supabase.co/functions/v1/community-gallery',
 
   /* ── Cloudflare Turnstile (replace before launch) ────── */

@@ -270,6 +270,50 @@ button {
   color: #1a1a1a;
 }
 
+.hero-btn:disabled,
+.hero-btn.is-closed {
+  cursor: not-allowed;
+  color: #858585;
+  border-color: #555;
+  background: #202020;
+  box-shadow: none;
+  opacity: 0.75;
+}
+
+.wl-countdown {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 13px;
+  color: var(--border);
+  font-family: var(--mono);
+  animation: hero-enter 0.65s 0.4s cubic-bezier(0.2, 0.75, 0.25, 1) both;
+}
+
+.wl-countdown-label {
+  color: #9c9c9c;
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+.wl-countdown-time {
+  min-width: 76px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  font-variant-numeric: tabular-nums;
+}
+
+.wl-countdown.is-closed .wl-countdown-label {
+  color: #777;
+}
+
+.wl-countdown.is-closed .wl-countdown-time {
+  color: #777;
+}
+
 /* Scroll hint */
 .scroll-hint {
   position: absolute;

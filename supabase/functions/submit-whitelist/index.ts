@@ -6,6 +6,9 @@ const SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;
 // Test Turnstile secret always passes: '1x0000000000000000000000000000000AA'
 const TURNSTILE_SECRET = Deno.env.get('TURNSTILE_SECRET_KEY') ?? '1x0000000000000000000000000000000AA';
 
+// 15 July 2026, 16:27:25 Casablanca time. Reject late submissions server-side.
+const WL_CLOSES_AT = Date.parse('2026-07-15T15:27:25Z');
+
 // EVM address: 0x + 40 hex characters
 const EVM_REGEX = /^0x[0-9a-fA-F]{40}$/;
 
@@ -37,6 +40,9 @@ const CORS = {
 Deno.serve(async (req) => {
   if (req.method === 'OPTIONS') return new Response(null, { status: 204, headers: CORS });
   if (req.method !== 'POST')   return respond(405, { error: 'Method not allowed' });
+  if (Date.now() >= WL_CLOSES_AT) {
+    return respond(410, { error: 'closed', message: 'The whitelist is closed.' });
+  }
 
   // Rate limit
   const ip = req.headers.get('x-forwarded-for')?.split(',')[0].trim() ?? 'unknown';
