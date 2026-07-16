@@ -43,12 +43,14 @@ module.exports = async function handler(req, res) {
     query.searchParams.set("wallet_address", `eq.${wallet}`);
     query.searchParams.set("limit", "1");
 
-    const response = await fetch(query, {
-      headers: {
-        apikey: serviceRoleKey,
-        Authorization: `Bearer ${serviceRoleKey}`,
-      },
-    });
+    const headers = { apikey: serviceRoleKey };
+    // New Supabase sb_secret keys are API keys, not JWTs. Sending them as a
+    // Bearer token makes PostgREST reject an otherwise valid request.
+    if (!serviceRoleKey.startsWith("sb_secret_")) {
+      headers.Authorization = `Bearer ${serviceRoleKey}`;
+    }
+
+    const response = await fetch(query, { headers });
     if (!response.ok) throw new Error(`Supabase returned ${response.status}`);
 
     const rows = await response.json();
