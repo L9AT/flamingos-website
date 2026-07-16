@@ -51,7 +51,18 @@ module.exports = async function handler(req, res) {
     }
 
     const response = await fetch(query, { headers });
-    if (!response.ok) throw new Error(`Supabase returned ${response.status}`);
+    if (!response.ok) {
+      const details = await response.json().catch(() => ({}));
+      console.error("Supabase checker diagnostics:", {
+        status: response.status,
+        host: query.hostname,
+        keyFormat: serviceRoleKey.startsWith("sb_secret_") ? "secret" : "jwt",
+        keyLength: serviceRoleKey.length,
+        code: details.code || "unknown",
+        message: details.message || "unknown",
+      });
+      throw new Error(`Supabase returned ${response.status}`);
+    }
 
     const rows = await response.json();
     return res.status(200).json({ whitelisted: Array.isArray(rows) && rows.length > 0 });
