@@ -13,7 +13,7 @@
     rel="stylesheet" />
   <link rel="icon" type="image/png" href="LOGO/icon.png" />
   <link rel="apple-touch-icon" href="LOGO/icon.png" />
-  <link rel="stylesheet" href="style.css?v=30" />
+  <link rel="stylesheet" href="style.css?v=31" />
   <link rel="stylesheet" href="shared.css?v=3" />
 </head>
 
@@ -49,11 +49,15 @@
     <p class="hero-sub">5555 flamingos on <a href="https://x.com/RobinhoodApp" target="_blank" rel="noopener noreferrer"
         aria-label="Robinhood on X"><img src="LOGO/Robinhood.png" alt="Robinhood" class="hero-chain-logo" /></a> chain.
     </p>
-    <button class="hero-btn" id="wl-btn" aria-haspopup="dialog">GET WL</button>
-    <div class="wl-countdown" id="wl-countdown" role="timer" aria-live="polite">
-      <span class="wl-countdown-label" id="wl-countdown-label">WL CLOSES IN</span>
-      <span class="wl-countdown-time" id="wl-countdown-time">06:00:00</span>
-    </div>
+    <form class="wl-checker" id="wl-checker" novalidate>
+      <label for="wl-check-wallet">CHECK YOUR WL</label>
+      <div class="wl-checker-row">
+        <input id="wl-check-wallet" name="wallet_address" type="text" inputmode="text" autocomplete="off"
+          spellcheck="false" placeholder="0x..." aria-describedby="wl-check-result" />
+        <button type="submit" id="wl-check-submit">CHECK</button>
+      </div>
+      <p class="wl-check-result" id="wl-check-result" role="status" aria-live="polite"></p>
+    </form>
     <a href="gallery.html" class="hero-gtd-card temporarily-hidden" aria-label="Submit your funniest Flamingos art to win a GTD spot" hidden>
       <span class="hero-gtd-star">★</span>
       <span class="hero-gtd-copy">
@@ -195,8 +199,8 @@
     </div><!-- /.wl-card -->
   </div><!-- /#wl-modal -->
 
-  <script src="config.js?v=6"></script>
-  <script src="script.js?v=13"></script>
+  <script src="config.js?v=7"></script>
+  <script src="script.js?v=14"></script>
 </body>
 
 </html>

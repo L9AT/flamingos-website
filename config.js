@@ -20,6 +20,9 @@ window.WL_CONFIG = Object.freeze({
   EDGE_FUNCTION_URL: ['localhost', '127.0.0.1'].includes(window.location.hostname)
     ? 'https://taxbqinbjrbrytaxxjzi.supabase.co/functions/v1/submit-whitelist'
     : '/api/submit-whitelist',
+  WL_CHECKER_URL: ['localhost', '127.0.0.1'].includes(window.location.hostname)
+    ? 'https://www.flamingoseth.xyz/api/check-whitelist'
+    : '/api/check-whitelist',
   GALLERY_FUNCTION_URL: 'https://taxbqinbjrbrytaxxjzi.supabase.co/functions/v1/community-gallery',
 
   /* ── Cloudflare Turnstile (replace before launch) ────── */

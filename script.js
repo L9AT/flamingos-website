@@ -211,6 +211,8 @@
   const countdownLabel = document.getElementById('wl-countdown-label');
   const countdownTime = document.getElementById('wl-countdown-time');
 
+  if (!wlBtn) return;
+
   if (!window.WL_CONFIG) {
     console.error('[WLModal] WL_CONFIG not found. Make sure config.js is loaded before script.js.');
     return;
@@ -445,4 +447,58 @@
     if (whitelistClosed) window.clearInterval(countdownTimer);
   }, 1000);
 
+})();
+
+/* WL status checker */
+(function WLChecker() {
+  'use strict';
+
+  const EVM_RE = /^0x[0-9a-fA-F]{40}$/;
+  const form = document.getElementById('wl-checker');
+  const input = document.getElementById('wl-check-wallet');
+  const button = document.getElementById('wl-check-submit');
+  const result = document.getElementById('wl-check-result');
+
+  if (!form || !input || !button || !result || !window.WL_CONFIG) return;
+
+  function show(message, type = '') {
+    result.textContent = message;
+    result.className = `wl-check-result${type ? ` is-${type}` : ''}`;
+  }
+
+  form.addEventListener('submit', async function (event) {
+    event.preventDefault();
+    const wallet = input.value.trim();
+
+    if (!EVM_RE.test(wallet)) {
+      show('ENTER A VALID EVM WALLET (0x...)', 'error');
+      input.focus();
+      return;
+    }
+
+    button.disabled = true;
+    button.textContent = 'CHECKING...';
+    show('CHECKING THE FLOCK...');
+
+    try {
+      const response = await fetch(window.WL_CONFIG.WL_CHECKER_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ wallet_address: wallet }),
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) throw new Error(data.message || 'Unable to check this wallet.');
+
+      if (data.whitelisted) {
+        show('✓ YOU ARE ON THE WHITELIST', 'success');
+      } else {
+        show('✕ THIS WALLET IS NOT ON THE WHITELIST', 'error');
+      }
+    } catch (error) {
+      show(error.message || 'CHECK FAILED. TRY AGAIN.', 'error');
+    } finally {
+      button.disabled = false;
+      button.textContent = 'CHECK';
+    }
+  });
 })();
